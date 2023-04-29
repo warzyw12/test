@@ -1,17 +1,13 @@
-const fetchDataButton = document.getElementById("fetch-data");
-const resultDiv = document.getElementById("result");
+const fetchDataBtn = document.getElementById("fetch-data-btn");
 const urlInput = document.getElementById("url-input");
+const output = document.getElementById("output");
 
-fetchDataButton.addEventListener("click", async () => {
+fetchDataBtn.addEventListener("click", async () => {
   const url = urlInput.value;
-  const proxyURL = `https://cors-anywhere.herokuapp.com/${url}`;
-
-  try {
-    const response = await fetch(proxyURL);
-    const fetchedContent = await response.text();
-    const summary = await generateSummary(fetchedContent);
-    resultDiv.innerHTML = `<p>${summary}</p>`;
-  } catch (error) {
-    console.error("Error:", error);
+  if (url) {
+    const response = await fetch(`https://cors-anywhere.herokuapp.com/${url}`);
+    const text = await response.text();
+    const summary = await generateSummary(text);
+    output.innerText = summary;
   }
 });
